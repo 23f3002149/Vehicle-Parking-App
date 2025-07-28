@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Search Parking Data</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      margin: 0;
+      background-color: #fefefe;
+    }
+
+    .navbar {
+      background-color: #c6f6d5;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #a0aec0;
+    }
+
+    .navbar .left span {
+      color: green;
+      font-weight: bold;
+    }
+
+    .navbar .right a {
+      margin-left: 15px;
+      text-decoration: none;
+      color: orange;
+      font-weight: bold;
+    }
+
+    .nav-links a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+    }
+
+    .search-container {
+      margin: 30px auto;
+      text-align: center;
+    }
+
+    select, input[type="text"] {
+      padding: 8px 12px;
+      margin: 0 5px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-family: inherit;
+      font-size: 14px;
+    }
+
+    .search-label {
+      color: orange;
+      font-weight: bold;
+    }
+
+    .results-heading {
+      text-align: center;
+      font-weight: bold;
+      color: #3182ce;
+      margin-top: 30px;
+      font-size: 18px;
+    }
+
+    .results-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 20px;
+    }
+
+    .lot-card {
+      border: 2px solid #333;
+      border-radius: 10px;
+      padding: 15px;
+      margin: 10px;
+      width: 200px;
+      text-align: center;
+      background-color: #f7fafc;
+    }
+
+    .lot-card h4 {
+      margin: 0;
+      font-size: 16px;
+      color: #2d3748;
+    }
+
+    .lot-card a {
+      margin: 5px;
+      font-size: 12px;
+      text-decoration: none;
+      color: #e53e3e;
+      font-weight: bold;
+    }
+
+    .occupancy {
+      margin-top: 8px;
+      color: green;
+      font-weight: bold;
+    }
+
+    .slots {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 5px;
+      margin-top: 10px;
+    }
+
+    .slot {
+      padding: 5px;
+      border-radius: 5px;
+      background-color: #c6f6d5;
+      font-weight: bold;
+    }
+
+    .slot.occupied {
+      background-color: #fca5a5;
+    }
+  </style>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="left"><span>Welcome to Admin</span></div>
+    <div class="nav-links">
+      <a href="/admin_home">Home</a>
+      <a href="/admin_users">Users</a>
+      <a href="admin_search_functionality">Search</a>
+      <a href="/admin_summary">Summary</a>
+      <a href="/">Logout</a>
+      
+    </div>
+    <div class="right"><a href="/admin_profile">Edit Profile</a></div>
+  </div>
+
+  <!-- Search Bar -->
+  <form method="GET" action="/admin_search_functionality">
+    <label class="search-label">Search by</label>
+    <select name="filter">
+      <option value="user_id">User ID</option>
+      <option value="spot_id">Parking Spot ID</option>
+      <option value="location">Location</option>
+    </select>
+    <input type="text" name="query" placeholder="Search string..." />
+    <button type="submit">Search</button>
+  </form>
+
+
+  <!-- Example Results -->
+  <!-- <div class="results-heading">
+    Example search parking lots @Velachery location
+  </div> -->
+
+  <div class="results-container">
+
+    {% if filter_type == "location" %}
+      {% for item in results %}
+        {% set lot = item.lot %}
+        {% set spots = item.spots %}
+        <div class="lot-card">
+          <h4>Parking#{{ lot.id }}</h4>
+          <a href="/edit_lot/{{ lot.id }}">Edit</a> | <a href="/delete_lot/{{ lot.id }}">Delete</a>
+          <div class="occupancy">(Occupied : {{ spots | selectattr('status', 'equalto', 'occupied') | list | length }}/{{ lot.max_spots }})</div>
+          <div class="slots">
+            {% for spot in spots %}
+              <div class="slot {% if spot.status == 'occupied' %}occupied{% endif %}">
+                {% if spot.status == 'occupied' %}O{% else %}A{% endif %}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      {% for res in results %}
+        <div class="lot-card">
+          <h4>Reservation ID: {{ res.id }}</h4>
+          <p>User: {{ res.user_id }}</p>
+          <p>Spot: {{ res.spot_id }}</p>
+          <p>Lot: {{ res.parking_lots.prime_location_name }}</p>
+          <p>Vehicle: {{ res.vehicle_number }}</p>
+        </div>
+      {% endfor %}
+    {% endif %}
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>New Parking Lot</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background-color: #fff;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    .add-box {
+      border: 2px solid #333;
+      border-radius: 15px;
+      width: 400px;
+      margin: 60px auto;
+      padding: 20px;
+      box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .add-header {
+      background-color: #e0e0e0;
+      padding: 10px;
+      border-radius: 12px 12px 0 0;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .form-group {
+      text-align: left;
+      margin: 15px 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-family: inherit;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      height: 60px;
+    }
+
+    .form-buttons {
+      margin-top: 20px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 14px;
+      margin: 0 10px;
+      cursor: pointer;
+    }
+
+    .btn-add {
+      background-color: #90cdf4;
+    }
+
+    .btn-cancel {
+      background-color: #fca5a5;
+    }
+
+    .btn:hover {
+      opacity: 0.85;
+    }
+
+    .note {
+      color: orangered;
+      font-style: italic;
+      margin-top: 10px;
+    }
+  </style>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <div class="add-box">
+    <div class="add-header">New Parking Lot</div>
+    <form method="POST" action="/add_lot">
+      <div class="form-group">
+        <label for="location">Prime Location Name:</label>
+        <input type="text" id="location" name="location" required />
+      </div>
+      <div class="form-group">
+        <label for="address">Address:</label>
+        <textarea id="address" name="address" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="pincode">Pin Code:</label>
+        <input type="text" id="pincode" name="pincode" required />
+      </div>
+      <div class="form-group">
+        <label for="price">Price (per hour):</label>
+        <input type="number" id="price" name="price" required />
+      </div>
+      <div class="form-group">
+        <label for="max_spots">Maximum Spots:</label>
+        <input type="number" id="max_spots" name="max_spots" required />
+      </div>
+
+      <div class="form-buttons">
+        <button type="submit" class="btn btn-add">Add</button>
+        <button type="button" class="btn btn-cancel" onclick="window.history.back();">Cancel</button>
+      </div>
+
+      <div class="note">etc., fields…</div>
+    </form>
+    <div style="color: red;">{{message}}</div>
+  </div>
+
+</body>
+</html>

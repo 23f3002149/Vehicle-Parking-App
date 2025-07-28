@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>View/Delete Parking Spot</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background-color: #fff;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    .view-box {
+      border: 2px solid #333;
+      border-radius: 15px;
+      width: 400px;
+      margin: 60px auto;
+      padding: 20px;
+      box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .view-header {
+      background-color: #fcd34d;
+      padding: 10px;
+      border-radius: 12px 12px 0 0;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .form-group {
+      text-align: left;
+      margin: 15px 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-family: inherit;
+      background-color: #f1f1f1;
+    }
+
+    .form-buttons {
+      margin-top: 20px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 14px;
+      margin: 0 10px;
+      cursor: pointer;
+    }
+
+    .btn-delete {
+      background-color: #fca5a5;
+    }
+
+    .btn-close {
+      background-color: #90cdf4;
+    }
+
+    .btn:hover {
+      opacity: 0.85;
+    }
+
+    .status-box {
+      color: #e53e3e;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .note {
+      color: red;
+      font-style: italic;
+      margin-top: 10px;
+      font-size: 13px;
+    }
+  </style>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <div class="view-box">
+    <div class="view-header">View/Delete Parking Spot</div>
+    <form method="POST" action="/spot_action">
+      <div class="form-group">
+        <label for="spot_id">ID :</label>
+        <input type="text" id="spot_id" name="spot_id" value="1" readonly />
+      </div>
+      <div class="form-group">
+        <label for="status">Status :</label>
+        <div class="status-box" onclick="alert('Occupied Status - Vehicle: KA-01-1234');">
+          O / A
+        </div>
+      </div>
+
+      <!-- Additional fields can go here -->
+
+      <div class="form-buttons">
+        <button type="submit" class="btn btn-delete">Delete</button>
+        <button type="button" class="btn btn-close" onclick="window.history.back();">Close</button>
+      </div>
+
+      <div class="note">Note: Can't delete the occupied parking spot.</div>
+    </form>
+  </div>
+
+</body>
+</html>

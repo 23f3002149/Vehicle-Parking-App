@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Release Parking Spot</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f9fc;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 500px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            background-color: #fce588;
+            color: #333;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .buttons {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+            margin: 0 10px;
+        }
+
+        .release-btn {
+            background-color: #9ec9f7;
+            color: #004085;
+        }
+
+        .cancel-btn {
+            background-color: #f7c9c9;
+            color: #721c24;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+    </style>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h2>Release the parking spot</h2>
+
+    <form>
+        <label>Spot ID :</label>
+        <input type="text" value="xxxxx" readonly>
+
+        <label>Vehicle Number :</label>
+        <input type="text" value="xxxxx" readonly>
+
+        <label>Parking Time :</label>
+        <input type="text" value="xxxxx" readonly>
+
+        <label>Releasing Time :</label>
+        <input type="text" value="xxxxx" readonly>
+
+        <label>Total Cost :</label>
+        <input type="text" value="xxxxx" readonly>
+
+        <!-- Add more fields if needed -->
+
+        <div class="buttons">
+            <button type="submit" class="release-btn">Release</button>
+            <button type="button" class="cancel-btn" onclick="window.history.back()">Cancel</button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

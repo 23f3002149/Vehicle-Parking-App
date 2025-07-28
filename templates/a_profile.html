@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View/Edit Profile</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f9fc;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 500px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            background-color: #fce588;
+            color: #333;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        input[type="text"]:not([readonly]),
+        input[type="email"]:not([readonly]),
+        input[type="password"]:not([readonly]),
+        input[type="number"]:not([readonly]) {
+            background-color: #fff;
+        }
+
+        .buttons {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+            margin: 0 10px;
+        }
+
+        .update-btn {
+            background-color: #9ec9f7;
+            color: #004085;
+        }
+
+        .cancel-btn {
+            background-color: #f7c9c9;
+            color: #721c24;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+    </style>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h2>View / Edit Profile</h2>
+
+    <form method="POST" action="/admin_profile">
+        <label>Email (Username) :</label>
+        <input type="email" name="email" value="{{admin.email}}" required>
+
+        <label>Full Name :</label>
+        <input type="text" name="full_name" value="{{admin.full_name}}" required>
+
+        <label>Password :</label>
+        <input type="password" name="password" value="{{admin.password}}" required>
+
+        <label>Address :</label>
+        <input type="text" name="address" value="{{admin.address}}" required>
+
+        <label>Pincode :</label>
+        <input type="number" name="pincode" value="{{admin.pincode}}" required>
+
+        <div class="buttons">
+            <button type="submit" class="update-btn">Update</button>
+            <button type="button" class="cancel-btn" onclick="window.history.back()">Cancel</button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

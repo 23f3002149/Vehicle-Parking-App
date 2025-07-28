@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Registered Users</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      margin: 0;
+      background-color: #f8f8f8;
+    }
+
+    .navbar {
+      background-color: #c6f6d5;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #a0aec0;
+    }
+
+    .navbar .left span {
+      color: green;
+      font-weight: bold;
+    }
+
+    .navbar .right a {
+      margin-left: 15px;
+      text-decoration: none;
+      color: orange;
+      font-weight: bold;
+    }
+
+    .nav-links a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+    }
+
+    h2 {
+      text-align: center;
+      margin-top: 20px;
+      color: #3182ce;
+    }
+
+    table {
+      width: 90%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      background-color: #fff;
+      border: 2px solid #4a5568;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 3px 3px 10px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid #ccc;
+    }
+
+    th {
+      background-color: #bee3f8;
+      font-weight: bold;
+    }
+
+    tr:hover {
+      background-color: #f0f9ff;
+    }
+
+    .note {
+      text-align: center;
+      color: orangered;
+      font-style: italic;
+      margin-bottom: 30px;
+    }
+  </style>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="left">
+      <span>Welcome to Admin</span>
+    </div>
+    <div class="nav-links">
+      <a href="/admin_home">Home</a>
+      <a href="/admin_users">Users</a>
+      <a href="admin_search_functionality">Search</a>
+      <a href="/admin_summary">Summary</a>
+      <a href="/">Logout</a>
+     
+    </div>
+    <div class="right">
+      <a href="/admin_profile">Edit Profile</a>
+    </div>
+  </div>
+
+  <!-- Page Heading -->
+  <h2>Registered Users</h2>
+
+  <!-- Users Table -->
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Email</th>
+        <th>Full Name</th>
+        <th>Address</th>
+        <th>Pin Code</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if user %}
+      {% for usr in user %}
+      <tr>
+        <td>{{ usr.id }}</td>
+        <td>{{ usr.email }}</td>
+        <td>{{ usr.full_name }}</td>
+        <td>{{ usr.address }}</td>
+        <td>{{ usr.pincode }}</td>
+      </tr>
+      {% endfor %}
+
+      
+    </tbody>
+    {% else %}
+    <tr>
+      <td style="color: #3182ce;" colspan="5">No users found.</td>
+    </tr>
+    {% endif %}
+  </table>
+
+</body>
+</html>

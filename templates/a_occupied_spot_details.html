@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Occupied Parking Spot Details</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background-color: #fff;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    .details-box {
+      border: 2px solid #333;
+      border-radius: 15px;
+      width: 400px;
+      margin: 60px auto;
+      padding: 20px;
+      box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .details-header {
+      background-color: #fcd34d;
+      padding: 10px;
+      border-radius: 12px 12px 0 0;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .form-group {
+      text-align: left;
+      margin: 15px 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-family: inherit;
+      background-color: #f1f1f1;
+    }
+
+    .form-buttons {
+      margin-top: 20px;
+    }
+
+    .btn-close {
+      padding: 10px 20px;
+      background-color: #90cdf4;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .btn-close:hover {
+      opacity: 0.85;
+    }
+
+    .note {
+      color: orangered;
+      font-style: italic;
+      margin-top: 10px;
+    }
+  </style>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <div class="details-box">
+    <div class="details-header">Occupied Parking Spot Details</div>
+    <form>
+      <div class="form-group">
+        <label for="spot_id">ID :</label>
+        <input type="text" id="spot_id" value="1" readonly />
+      </div>
+      <div class="form-group">
+        <label for="cust_id">Customer ID :</label>
+        <input type="text" id="cust_id" value="XXXX" readonly />
+      </div>
+      <div class="form-group">
+        <label for="vehicle">Vehicle Number :</label>
+        <input type="text" id="vehicle" value="MH12AB1234" readonly />
+      </div>
+      <div class="form-group">
+        <label for="datetime">Date/Time of Parking :</label>
+        <input type="text" id="datetime" value="26/06/2025 03:15 PM" readonly />
+      </div>
+      <div class="form-group">
+        <label for="cost">Est. Parking Cost :</label>
+        <input type="text" id="cost" value="₹50" readonly />
+      </div>
+
+      <!-- Additional fields can go here -->
+
+      <div class="form-buttons">
+        <button type="button" class="btn-close" onclick="window.history.back();">Close</button>
+      </div>
+
+      <div class="note">etc., fields…</div>
+    </form>
+  </div>
+
+</body>
+</html>

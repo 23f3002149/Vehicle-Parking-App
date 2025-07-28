@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Parking Summary</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      margin: 0;
+      background-color: #fff;
+    }
+
+    .navbar {
+      background-color: #c6f6d5;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #a0aec0;
+    }
+
+    .navbar .left span {
+      color: green;
+      font-weight: bold;
+    }
+
+    .navbar .right a {
+      margin-left: 15px;
+      text-decoration: none;
+      color: orange;
+      font-weight: bold;
+    }
+
+    .nav-links a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+    }
+
+    h2 {
+      text-align: center;
+      margin-top: 20px;
+      color: orange;
+    }
+
+    .charts-container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      margin: 40px;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .chart-box {
+      width: 300px;
+      text-align: center;
+    }
+
+    .chart-box h4 {
+      margin: 10px 0;
+      font-weight: bold;
+      color: #2b6cb0;
+    }
+
+    canvas {
+      background-color: #fefefe;
+      border: 2px solid #aaa;
+      border-radius: 12px;
+      padding: 10px;
+    }
+  </style>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="left"><span>Welcome to Admin</span></div>
+    <div class="nav-links">
+      <a href="/admin_home">Home</a>
+      <a href="/admin_users">Users</a>
+      <a href="/admin_search_functionality">Search</a>
+      <a href="/admin_summary">Summary</a>
+      <a href="/">Logout</a>
+    </div>
+    <div class="right"><a href="#">Edit Profile</a></div>
+  </div>
+
+  <h2>Summary shows <span style="color:orangered;">statistical charts</span></h2>
+
+  <div class="charts-container">
+
+    <!-- Donut Chart -->
+    <div class="chart-box">
+      <h4>Revenue from each parking lot</h4>
+      <canvas id="revenueChart"></canvas>
+    </div>
+
+    <!-- Bar Chart -->
+    <div class="chart-box">
+      <h4>Summary of available vs occupied spots</h4>
+      <canvas id="occupancyChart"></canvas>
+    </div>
+
+  </div>
+
+  <script>
+    // === REVENUE DONUT CHART ===
+    const revenueCtx = document.getElementById('revenueChart');
+    new Chart(revenueCtx, {
+      type: 'doughnut',
+      data: {
+        labels: {{ revenue_data | map(attribute='lot_name') | list | tojson }},
+        datasets: [{
+          label: 'Revenue ₹',
+          data: {{ revenue_data | map(attribute='revenue') | list | tojson }},
+          backgroundColor: ['#68D391', '#63B3ED', '#FBB6CE', '#FFD700', '#FF9AA2', '#B5EAD7'],
+          borderColor: '#fff',
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'bottom'
+          }
+        }
+      }
+    });
+
+    // === OCCUPANCY BAR CHART ===
+    const occupancyCtx = document.getElementById('occupancyChart');
+    new Chart(occupancyCtx, {
+      type: 'bar',
+      data: {
+        labels: {{ occupancy_labels | tojson }},
+        datasets: [
+          {
+            label: 'Occupied',
+            data: {{ occupied_data | tojson }},
+            backgroundColor: '#FC8181'
+          },
+          {
+            label: 'Available',
+            data: {{ available_data | tojson }},
+            backgroundColor: '#90CDF4'
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 1
+            }
+          }
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>

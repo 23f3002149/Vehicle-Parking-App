@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f9fc;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #dff0d8;
+            padding: 15px 30px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            color: #d9534f;
+        }
+
+        header nav a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #333;
+        }
+
+        header nav a:hover {
+            text-decoration: underline;
+        }
+
+        header .profile a {
+            color: #337ab7;
+            text-decoration: none;
+        }
+
+        header .profile a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            width: 90%;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            background-color: #eaf2f8;
+            padding: 8px 16px;
+            border-radius: 5px;
+            color: #004085;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table th, table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+
+        table th {
+            background-color: #f2f2f2;
+        }
+
+        button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button.release {
+            background-color: #f5c6cb;
+            color: #721c24;
+        }
+
+        button.parked {
+            background-color: #c3e6cb;
+            color: #155724;
+        }
+
+        button.book {
+            background-color: #b8daff;
+            color: #004085;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .search-bar {
+            margin-bottom: 15px;
+        }
+
+        input[type="text"] {
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul style="color: green; list-style: none;">
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+
+
+<header>
+    <div>
+        <h1>User Dashboard</h1>
+    </div>
+    <nav>
+        <span>Welcome to User</span> |
+        <a href="/user_home/{{ user_id }}">Home</a> |
+        <a href="/user_summary/{{ user_id }}">Summary</a> |
+        <a href="/">Logout</a>
+    </nav>
+    <div class="profile">
+        <a href="/user_profile/{{ user_id }}">Edit Profile</a>
+    </div>
+</header>
+
+<div class="container">
+
+    <!-- Recent Parking History -->
+    <div class="section-title">Recent Parking History</div>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Location</th>
+            <th>Vehicle No</th>
+            <th>Timestamp</th>
+            <th>Action</th>
+        </tr>
+        {% for history in parking_history %}
+        <tr>
+            <td>{{ history.id }}</td>
+            <td>{{ history.parking_lots.prime_location_name }}</td>
+            <td>{{ history.vehicle_number }}</td>
+            <td>{{ history.parking_timestamp.strftime('%d-%m-%Y %H:%M') }}</td>
+            <td>
+                {% if not history.leaving_timestamp %}
+                <form method="POST" action="/release_spot/{{ history.id }}">
+                    <button class="release" type="submit">Release</button>
+                </form>
+                {% else %}
+                <button class="parked" disabled>Parked Out</button>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <!-- Search Parking -->
+    <div class="search-bar">
+        <form method="GET" action="/user_home/{{ user_id }}">
+            <label>Search parking @ location/pin code: </label>
+            <input type="text" name="search" placeholder="Dadar Road or 400001">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <!-- Parking Lots -->
+    <div class="section-title">Parking Lots {% if search_query %}@ {{ search_query }}{% endif %}</div>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Address</th>
+            <th>Availability</th>
+            <th>Action</th>
+        </tr>
+        {% for lot in available_lots %}
+        <tr>
+            <td>{{ lot.id }}</td>
+            <td>{{ lot.address }}</td>
+            <td>{{ lot.available_count }}</td>
+            <td>
+                <a href="/book/{{ lot.available_spot_id }}/{{ lot.id }}/{{ user_id }}">
+                     <button class="book">Book</button>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</div>
+
+</body>
+</html>

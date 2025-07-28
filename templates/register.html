@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Signup</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background-color: #fff;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      color: red;
+      margin-top: 40px;
+      font-size: 36px;
+    }
+
+    .signup-box {
+      border: 2px solid black;
+      border-radius: 15px;
+      width: 350px;
+      margin: 40px auto;
+      padding: 20px;
+      box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .signup-box h2 {
+      color: purple;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+      text-align: left;
+      padding-left: 10px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    .form-group input, .form-group textarea {
+      width: 90%;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-family: inherit;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      height: 60px;
+    }
+
+    .btn-register {
+      background-color: #66ccff;
+      color: black;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .btn-register:hover {
+      background-color: #33b5e5;
+    }
+
+    .login-link {
+      display: block;
+      margin-top: 10px;
+      color: orange;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .login-link:hover {
+      text-decoration: underline;
+    }
+
+    .note {
+      font-style: italic;
+      color: gray;
+      margin-top: 10px;
+    }
+  </style>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <h1>Vehicle Parking</h1>
+
+  <div class="signup-box">
+    <h2>User Signup</h2>
+    <form method="POST" action="/register">
+      <div class="form-group">
+        <label for="email">Email ID (Username):</label>
+        <input type="email" id="email" name="email" required />
+      </div>
+      <div class="form-group">
+        <label for="password">Password :</label>
+        <input type="password" id="password" name="password" required />
+      </div>
+      <div class="form-group">
+        <label for="fullname">Fullname :</label>
+        <input type="text" id="fullname" name="fullname" required />
+      </div>
+      <div class="form-group">
+        <label for="address">Address :</label>
+        <textarea id="address" name="address" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="pincode">Pin Code :</label>
+        <input type="text" id="pincode" name="pincode" required />
+      </div>
+      <button class="btn-register" type="submit">Register</button>
+      <a href="/" class="login-link">Login here!</a>
+    </form>
+    <div style="color: red;">{{message}}</div>
+    <div class="note">No registration required to Admin</div>
+  </div>
+</body>
+</html>

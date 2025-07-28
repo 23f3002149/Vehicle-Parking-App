@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Summary</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f9fc;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #d9f9d9;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header .left {
+            font-size: 18px;
+        }
+
+        .header .left span {
+            color: red;
+            font-weight: bold;
+        }
+
+        .header .center a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #000;
+            font-weight: bold;
+        }
+
+        .header .right a {
+            text-decoration: none;
+            color: #0077cc;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 700px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .chart {
+            width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .caption {
+            margin-top: 10px;
+            font-style: italic;
+        }
+    </style>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="header">
+    <div class="left">
+        <span>Welcome to User</span>
+    </div>
+    <div class="center">
+        <a href="/user_home/{{ user_id }}">Home</a> |
+        <a href="/user_summary/{{ user_id }}">Summary</a> |
+        <a href="/">Logout</a>
+    </div>
+    <div class="right">
+        <a href="/user_profile/{{ user_id }}">Edit Profile</a>
+    </div>
+</div>
+
+<div class="container">
+    <h2>Parking Usage Summary</h2>
+
+    <div class="chart">
+        <canvas id="userChart"></canvas>
+    </div>
+
+    <div class="caption">
+        Summary of your previously booked parking spots
+    </div>
+</div>
+
+<script>
+    const ctx = document.getElementById('userChart').getContext('2d');
+    const userChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {{ lot_names | tojson }},
+            datasets: [{
+                label: 'No. of Bookings',
+                data: {{ usage_counts | tojson }},
+                backgroundColor: '#63B3ED'
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    stepSize: 1
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
